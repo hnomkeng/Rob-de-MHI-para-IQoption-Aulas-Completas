@@ -68,7 +68,7 @@ lucro_op_atual = 0
 analise_medias = config['AJUSTES']['analise_medias']
 velas_medias = int(config['AJUSTES']['velas_medias'])
 
-print(yellow+'Iniciando Conexão com a IQOption')
+print(yellow+'Starting Connection with IQOption')
 API = IQ_Option(email,senha)
 
 ### Função para conectar na IQOPTION ###
@@ -77,18 +77,18 @@ if check:
     print(green + '\nConectado com sucesso')
 else:
     if reason == '{"code":"invalid_credentials","message":"You entered the wrong credentials. Please ensure that your login/password is correct."}':
-        print(red+'\nEmail ou senha incorreta')
+        print(red+'\nIncorrect email or password')
         sys.exit()
         
     else:
-        print(red+ '\nHouve um problema na conexão')
+        print(red+ '\nThere was a problem with the connection')
 
         print(reason)
         sys.exit()
 
 ### Função para Selecionar demo ou real ###
 while True:
-    escolha = input(green+'\n>>'+ white +' Selecione a conta em que deseja conectar:\n'+
+    escolha = input(green+'\n>>'+ white +' Select the account you want to connect to:\n'+
                             green+'>>'+ white +' 1 - Demo\n'+
                             green+'>>'+ white +' 2 - Real\n'+
                             green+'-->'+ white +' ')
@@ -97,14 +97,14 @@ while True:
 
     if escolha == 1:
         conta = 'PRACTICE'
-        print('Conta demo selecionada')
+        print('Selected demo account')
         break
     if escolha == 2:
         conta = 'REAL'
-        print('Conta real selecionada')
+        print('Selected real account')
         break
     else:
-        print(red+'Escolha incorreta! Digite demo ou real')
+        print(red+'Incorrect choice! Enter demo or real')
         
 API.change_balance(conta)
 
@@ -115,7 +115,7 @@ def check_stop():
     if lucro_total <= float('-'+str(abs(stop_loss))):
         stop = False
         print(red+'\n#########################')
-        print(red+'STOP LOSS BATIDO ',str(cifrao),str(lucro_total))
+        print(red+'STOP LOSS SHAKE ',str(cifrao),str(lucro_total))
         print(red+'#########################')
         sys.exit()
         
@@ -123,7 +123,7 @@ def check_stop():
     if lucro_total >= float(abs(stop_win)):
         stop = False
         print(green+'\n#########################')
-        print(green+'STOP WIN BATIDO ',str(cifrao),str(lucro_total))
+        print(green+'STOP WIN SHAKE ',str(cifrao),str(lucro_total))
         print(green+'#########################')
         sys.exit()
 
@@ -190,9 +190,9 @@ def compra(ativo,valor_entrada,direcao,exp,tipo):
 
             if check:
                 if i == 0: 
-                    print(yellow + '\n>>'+white+' Ordem aberta \n'+yellow+'>>'+white+' Par:',ativo,'\n'+yellow+'>> '+white+'Timeframe:',exp,'\n'+yellow+'>>'+white+' Entrada de:',cifrao,entrada)
+                    print(yellow + '\n>>'+white+' Open order \n'+yellow+'>>'+white+' Par:',ativo,'\n'+yellow+'>> '+white+'Timeframe:',exp,'\n'+yellow+'>>'+white+' Entrada de:',cifrao,entrada)
                 if i >= 1:
-                    print(yellow + '\n>>'+white+' Ordem aberta para gale',str(i),'\n'+yellow+'>>'+white+' Par:',ativo,'\n'+yellow+'>> '+white+'Timeframe:',exp,'\n'+yellow+'>>'+white+' Entrada de:',cifrao,entrada)
+                    print(yellow + '\n>>'+white+' Open order for gale',str(i),'\n'+yellow+'>>'+white+' Par:',ativo,'\n'+yellow+'>> '+white+'Timeframe:',exp,'\n'+yellow+'>>'+white+' Entrada de:',cifrao,entrada)
 
 
                 while True:
@@ -207,16 +207,16 @@ def compra(ativo,valor_entrada,direcao,exp,tipo):
 
                         if resultado > 0:
                             if i == 0:
-                                print(green+ '\n>> Resultado: WIN \n'+white+'>> Lucro:', round(resultado,2), '\n>> Par:', ativo, '\n>> Lucro total: ', round(lucro_total,2))
+                                print(green+ '\n>> Result: WIN \n'+white+'>> Lucro:', round(resultado,2), '\n>> Par:', ativo, '\n>> Lucro total: ', round(lucro_total,2))
                             if i >= 1:
-                                print(green+ '\n>> Resultado: WIN no gale',str(i)+white+'\n>> Lucro:', round(resultado,2), '\n>> Par:', ativo, '\n>> Lucro total: ', round(lucro_total,2))
+                                print(green+ '\n>> Result: WIN no gale',str(i)+white+'\n>> Lucro:', round(resultado,2), '\n>> Par:', ativo, '\n>> Lucro total: ', round(lucro_total,2))
 
                         elif resultado == 0:
                             if i == 0:
-                                print(yellow +'\n>> Resultado: EMPATE \n'+white+'\>> Lucro:', round(resultado,2), '\n>> Par:', ativo, '\n>> Lucro total: ', round(lucro_total,2))
+                                print(yellow +'\n>> Result: A TIE \n'+white+'\>> Lucro:', round(resultado,2), '\n>> Par:', ativo, '\n>> Lucro total: ', round(lucro_total,2))
                             
                             if i >= 1:
-                                print(yellow+'\n>> Resultado: EMPATE no gale',str(i),'\n'+white+'>> Lucro:', round(resultado,2), '\n>> Par:', ativo, '\n>> Lucro total: ', round(lucro_total,2))
+                                print(yellow+'\n>> Result: DRAW does not gale',str(i),'\n'+white+'>> Lucro:', round(resultado,2), '\n>> Par:', ativo, '\n>> Lucro total: ', round(lucro_total,2))
                             
                             if i+1 <= martingale:
                                 gale = float(entrada)                   
@@ -224,9 +224,9 @@ def compra(ativo,valor_entrada,direcao,exp,tipo):
 
                         else:
                             if i == 0:
-                                print(red+'\n>> Resultado: LOSS \n'+white+'>> Lucro:', round(resultado,2), '\n>> Par:', ativo, '\n>> Lucro total: ', round(lucro_total,2))
+                                print(red+'\n>> Result: LOSS \n'+white+'>> Lucro:', round(resultado,2), '\n>> Par:', ativo, '\n>> Lucro total: ', round(lucro_total,2))
                             if i >= 1:
-                                print(red+'\n>> Resultado: LOSS no gale',str(i), '\n'+white+'>> Lucro:', round(resultado,2), '\n>> Par:', ativo, '\n>> Lucro total: ', round(lucro_total,2))
+                                print(red+'\n>> Result: LOSS no gale',str(i), '\n'+white+'>> Lucro:', round(resultado,2), '\n>> Par:', ativo, '\n>> Lucro total: ', round(lucro_total,2))
                                 
                             if i+1 <= martingale:
                                 
@@ -242,7 +242,7 @@ def compra(ativo,valor_entrada,direcao,exp,tipo):
                     break
 
             else:
-                print('erro na abertura da ordem,', id,ativo)
+                print('error opening order,', id,ativo)
 
     if soros:
         if lucro_op_atual > 0:
@@ -282,13 +282,13 @@ def estrategia_mhi():
         binary, turbo, digital = payout(ativo)
         print(binary, turbo, digital )
         if digital > turbo:
-            print( 'Suas entradas serão realizadas nas digitais')
+            print( 'Your entries will be made on fingerprints')
             tipo = 'digital'
         elif turbo > digital:
-            print( 'Suas entradas serão realizadas nas binárias')
+            print( 'Your entries will be made in binary')
             tipo = 'binary'
         else:
-            print(' Par fechado, escolha outro')
+            print(' Closed pair, choose another')
             sys.exit()
 
 
@@ -304,11 +304,11 @@ def estrategia_mhi():
 
         entrar = True if (minutos >= 4.59 and minutos <= 5.00) or minutos >= 9.59 else False
 
-        print('Aguardando Horário de entrada ' ,minutos, end='\r')
+        print('Waiting for entry time ' ,minutos, end='\r')
         
 
         if entrar:
-            print('\n>> Iniciando análise da estratégia MHI')
+            print('\n>> Starting analysis of the MHI strategy')
 
             direcao = False
 
@@ -343,7 +343,7 @@ def estrategia_mhi():
 
 
             if direcao == 'put' or direcao == 'call':
-                print('Velas: ',velas[-3] ,velas[-2] ,velas[-1] , ' - Entrada para ', direcao)
+                print('Candles: ',velas[-3] ,velas[-2] ,velas[-1] , ' - Entrance to ', direcao)
 
 
                 compra(ativo,valor_entrada,direcao,1,tipo)
@@ -353,12 +353,12 @@ def estrategia_mhi():
 
             else:
                 if direcao == 'abortar':
-                    print('Velas: ',velas[-3] ,velas[-2] ,velas[-1] )
-                    print('Entrada abortada - Contra Tendência.')
+                    print('Candles: ',velas[-3] ,velas[-2] ,velas[-1] )
+                    print('Entry aborted - Against Trend.')
 
                 else:
-                    print('Velas: ',velas[-3] ,velas[-2] ,velas[-1] )
-                    print('Entrada abortada - Foi encontrado um doji na análise.')
+                    print('Candles: ',velas[-3] ,velas[-2] ,velas[-1] )
+                    print('Entry aborted - A doji was found in the analysis.')
 
                 time.sleep(2)
 
@@ -372,13 +372,13 @@ def estrategia_torresgemeas():
         binary, turbo, digital = payout(ativo)
         print(binary, turbo, digital )
         if digital > turbo:
-            print( 'Suas entradas serão realizadas nas digitais')
+            print( 'Your entries will be made on fingerprints')
             tipo = 'digital'
         elif turbo > digital:
-            print( 'Suas entradas serão realizadas nas binárias')
+            print( 'Your entries will be made in binary')
             tipo = 'binary'
         else:
-            print(' Par fechado, escolha outro')
+            print(' Closed pair, choose another')
             sys.exit()
 
 
@@ -394,7 +394,7 @@ def estrategia_torresgemeas():
 
         entrar = True if (minutos >= 3.59 and minutos <= 4.00) or (minutos >= 8.59 and minutos <= 9.00) else False
 
-        print('Aguardando Horário de entrada ' ,minutos, end='\r')
+        print('Waiting for entry time ' ,minutos, end='\r')
         
 
         if entrar:
@@ -430,7 +430,7 @@ def estrategia_torresgemeas():
 
 
             if direcao == 'put' or direcao == 'call':
-                print('Velas: ',velas[-3] ,velas[-2] ,velas[-1] , ' - Entrada para ', direcao)
+                print('Candles: ',velas[-3] ,velas[-2] ,velas[-1] , ' - Entrada para ', direcao)
 
 
                 compra(ativo,valor_entrada,direcao,1,tipo)
@@ -440,12 +440,12 @@ def estrategia_torresgemeas():
 
             else:
                 if direcao == 'abortar':
-                    print('Velas: ',velas[-3] ,velas[-2] ,velas[-1] )
-                    print('Entrada abortada - Contra Tendência.')
+                    print('Candles: ',velas[-3] ,velas[-2] ,velas[-1] )
+                    print('Entry aborted - Against Trend.')
 
                 else:
-                    print('Velas: ',velas[-3] ,velas[-2] ,velas[-1] )
-                    print('Entrada abortada - Foi encontrado um doji na análise.')
+                    print('Candles: ',velas[-3] ,velas[-2] ,velas[-1] )
+                    print('Entry aborted - A doji was found in the analysis.')
 
                 time.sleep(2)
 
@@ -460,13 +460,13 @@ def estrategia_mhi_m5():
         binary, turbo, digital = payout(ativo)
         print(binary, turbo, digital )
         if digital > turbo:
-            print( 'Suas entradas serão realizadas nas digitais')
+            print( 'Your entries will be made on fingerprints')
             tipo = 'digital'
         elif turbo > digital:
-            print( 'Suas entradas serão realizadas nas binárias')
+            print( 'Your entries will be made in binary')
             tipo = 'binary'
         else:
-            print(' Par fechado, escolha outro')
+            print(' Closed pair, choose another')
             sys.exit()
 
 
@@ -482,11 +482,11 @@ def estrategia_mhi_m5():
 
         entrar = True if  (minutos >= 29.59 and minutos <= 30.00) or minutos == 59.59  else False
 
-        print('Aguardando Horário de entrada ' ,minutos, end='\r')
+        print('Waiting for entry time ' ,minutos, end='\r')
         
 
         if entrar:
-            print('\n>> Iniciando análise da estratégia MHI')
+            print('\n>> Starting analysis of the MHI strategy')
 
             direcao = False
 
@@ -520,7 +520,7 @@ def estrategia_mhi_m5():
 
 
             if direcao == 'put' or direcao == 'call':
-                print('Velas: ',velas[-3] ,velas[-2] ,velas[-1] , ' - Entrada para ', direcao)
+                print('Candles: ',velas[-3] ,velas[-2] ,velas[-1] , ' - Entrance to ', direcao)
 
 
                 compra(ativo,valor_entrada,direcao,5,tipo)
@@ -530,12 +530,12 @@ def estrategia_mhi_m5():
 
             else:
                 if direcao == 'abortar':
-                    print('Velas: ',velas[-3] ,velas[-2] ,velas[-1] )
-                    print('Entrada abortada - Contra Tendência.')
+                    print('Candles: ',velas[-3] ,velas[-2] ,velas[-1] )
+                    print('Entry aborted - Against Trend.')
 
                 else:
-                    print('Velas: ',velas[-3] ,velas[-2] ,velas[-1] )
-                    print('Entrada abortada - Foi encontrado um doji na análise.')
+                    print('Candles: ',velas[-3] ,velas[-2] ,velas[-1] )
+                    print('Entry aborted - A doji was found in the analysis.')
 
                 time.sleep(2)
 
@@ -551,16 +551,16 @@ nome = str(perfil['name'])
 valorconta = float(API.get_balance())
 
 print(yellow+'\n######################################################################')
-print('\nOlá, ',nome, '\nSeja bem vindo ao Robô do Canal do Lucas.')
-print('\nSeu Saldo na conta ',escolha, 'é de', cifrao,valorconta)
-print('\nSeu valor de entrada é de ',cifrao,valor_entrada)
+print('\nHello, ',nome, '\nWelcome to Lucas Robot Channel.')
+print('\nYour account balance ',escolha, 'its from', cifrao,valorconta)
+print('\nIts input value is ',cifrao,valor_entrada)
 print('\nStop win:',cifrao,stop_win)
 print('\nStop loss:',cifrao,'-',stop_loss)
 print(yellow+'\n######################################################################\n\n')
 
 
 
-print('>> Iniciando catalogação')
+print('>> Starting cataloging')
 lista_catalog , linha = catag(API)
 
 print(yellow+ tabulate(lista_catalog, headers=['ESTRATEGIA','PAR','WIN','GALE1','GALE2']))
@@ -569,15 +569,15 @@ estrateg = lista_catalog[0][0]
 ativo = lista_catalog[0][1]
 assertividade = lista_catalog[0][linha]
 
-print('\n>> Melhor par: ', ativo, ' | Estrategia: ',estrateg,' | Assertividade: ', assertividade)
+print('\n>> Best pair: ', ativo, ' | Strategy: ',estrateg,' | Assertiveness: ', assertividade)
 print('\n')
 
 
 ### Função para escolher estrategia ###
 while True:
-    estrategia = input(green+'\n>>'+ white +' Selecione a estratégia desejada:\n'+
+    estrategia = input(green+'\n>>'+ white +' Select the desired strategy:\n'+
                             green+'>>'+ white +' 1 - MHI\n'+
-                            green+'>>'+ white +' 2 - Torres Gêmeas\n'+
+                            green+'>>'+ white +' 2 - Twin Towers\n'+
                             green+'>>'+ white +' 3 - MHI M5\n'+
                             green+'-->'+ white +' ')
     
@@ -590,10 +590,10 @@ while True:
     if estrategia == 3:
         break
     else:
-        print(red+'Escolha incorreta! Digite 1 a 3')
+        print(red+'Incorrect choice! Enter 1 to 3')
 
 
-ativo = input(green+ '\n>>'+white+' Digite o ativo que você deseja operar: ').upper()
+ativo = input(green+ '\n>>'+white+' Enter the asset you want to trade: ').upper()
 print('\n')
 
 if estrategia == 1:
